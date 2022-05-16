@@ -4,7 +4,7 @@ const go = new Go(); // Defined in wasm_exec.js. Don't forget to add this in you
 const WASM_URL = '/application/wasm.wasm';
 var wasm;
 
-const runWasmAdd = async () => {
+function runWasmAdd() {
   if ('instantiateStreaming' in WebAssembly) {
     WebAssembly.instantiateStreaming(fetch(WASM_URL), go.importObject).then(function (obj) {
       wasm = obj.instance;
@@ -21,6 +21,6 @@ const runWasmAdd = async () => {
         })
     )
   }
-};
+}
 
 runWasmAdd();
