@@ -1,4 +1,4 @@
-import { wasmBrowserInstantiate } from "./instantiateWasm.js";
+import { wasmBrowserInstantiate } from "./iiinstantiateWasm.js";
 
 const go = new Go(); // Defined in wasm_exec.js. Don't forget to add this in your index.html.
 
