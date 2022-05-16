@@ -6,6 +6,7 @@ if ('instantiateStreaming' in WebAssembly) {
 	WebAssembly.instantiateStreaming(fetch(WASM_URL), go.importObject).then(function (obj) {
 		wasm = obj.instance;
 		go.run(wasm);
+      console.log('multiplied two numbers:', wasm.exports.multiply(5, 3));
 	})
 } else {
 	fetch(WASM_URL).then(resp =>
@@ -17,3 +18,5 @@ if ('instantiateStreaming' in WebAssembly) {
 		})
 	)
 }
+
+console.log('multiplied two numbers:', wasm.exports.multiply(5, 3));
