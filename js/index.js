@@ -9,7 +9,7 @@ function runWasmAdd() {
     WebAssembly.instantiateStreaming(fetch(WASM_URL), go.importObject).then(function (obj) {
       wasm = obj.instance;
       go.run(wasm);
-      console.log('multiplied add numbers:', wasm.exports.add(5, 3));
+      console.log('multiplied add numbers:', wasm.exports.multiply(5, 3));
     })
   } else {
     fetch(WASM_URL).then(resp =>
