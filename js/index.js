@@ -1,7 +1,7 @@
-import { wasmBrowserInstantiate } from "./instantiateWasm.js";
+import { wasmBrowserInstantiate } from "/js/instantiateWasm.js";
 
 const go = new Go(); // Defined in wasm_exec.js. Don't forget to add this in your index.html.
-const WASM_URL = './application/wasm.wasm';
+const WASM_URL = '/application/wasm.wasm';
 
 const runWasmAdd = async () => {
   // Get the importObject from the go instance.
