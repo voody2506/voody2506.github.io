@@ -4,23 +4,22 @@ const go = new Go(); // Defined in wasm_exec.js. Don't forget to add this in you
 const WASM_URL = '/application/wasm.wasm';
 var wasm;
 
-function runWasmAdd() {
-  if ('instantiateStreaming' in WebAssembly) {
-    WebAssembly.instantiateStreaming(fetch(WASM_URL), go.importObject).then(function (obj) {
-      wasm = obj.instance;
-      go.run(wasm);
-      console.log('multiplied add numbers:', wasm.exports.multiply(5, 3));
-    })
-  } else {
-    fetch(WASM_URL).then(resp =>
-        resp.arrayBuffer()
-    ).then(bytes =>
-        WebAssembly.instantiate(bytes, go.importObject).then(function (obj) {
-          wasm = obj.instance;
-          go.run(wasm);
-        })
-    )
-  }
+function postInstantiate(obj) {
+  wasm = obj.instance;
+  go.run(wasm);
+
+  // Calling a function exported from Go to JS
+  console.log('using Go-defined function to multiply two numbers:', wasm.exports.multiply(5, 3));
 }
 
-runWasmAdd();
+if ('instantiateStreaming' in WebAssembly) {
+  WebAssembly.instantiateStreaming(fetch(WASM_URL), go.importObject).then(postInstantiate);
+} else {
+  fetch(WASM_URL).then(resp =>
+      resp.arrayBuffer()
+  ).then(bytes =>
+      WebAssembly.instantiate(bytes, go.importObject).then(postInstantiate)
+  )
+}
+
+postInstantiate();
